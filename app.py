@@ -2,7 +2,7 @@ from flask import Flask, render_template_string, request
 import os
 import psycopg2
 
-app = Flask(_name_)
+app = Flask(__name__)
 DATABASE_URL = os.getenv("DATABASE_URL", "KENDI DATABASE URLNIZ")
 
 HTML = """
@@ -67,5 +67,5 @@ def index():
     except Exception as e:
         return f"İç hata: {e}", 500
 
-if _name_ == "_main_":
+if __name__ == "_main_":
     app.run(host="0.0.0.0", port=5000)
