@@ -12,7 +12,7 @@ HTML ="""
 <!doctype html >
 <html> 
 <head>
-<title>Buluttan Selam </ittle>
+<title>Buluttan Selam </tittle>
 <style>
     body {font-family: Arial ; text-align: center ; padding : 50px; background: #eef2f3;}
     h1 { color : #333; }
@@ -34,7 +34,7 @@ HTML ="""
     <ul>
         {% for ad in isimler%}
             <li>{{ ad }}</li>
-        {% enfor %}
+        {% endfor %}
     </ul>
 </body>
 </html>
@@ -51,14 +51,13 @@ def index():
     cur = conn.cursor()
     cur.execute("CREATE TABLE IF NOT EXISTS ziyaretciler (id SERIAL PRIMARY KEY, isim TEXT)")
 
-
 if request.method == "POST":
     isim = request.form.get("isim")
-    if isim:
+if isim:
         cur.execute("INSERT INTO ziyaretciler (isim) VALUES (%s)", (isim,))
         conn.commit()
 
-cur.execute("SELECT isim FORM ziyaretciler ORDER BY id DESC LIMIT 10")
+cur.execute("SELECT isim FROM ziyaretciler ORDER BY id DESC LIMIT 10")
 isimler = [row[0] for row in cur.fetchall()]
 
 cur.close()
