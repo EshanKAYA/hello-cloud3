@@ -12,7 +12,7 @@ HTML ="""
 <!doctype html >
 <html> 
 <head>
-<title>Buluttan Selam </tittle>
+<title>Buluttan Selam </title>
 <style>
     body {font-family: Arial ; text-align: center ; padding : 50px; background: #eef2f3;}
     h1 { color : #333; }
@@ -51,18 +51,20 @@ def index():
     cur = conn.cursor()
     cur.execute("CREATE TABLE IF NOT EXISTS ziyaretciler (id SERIAL PRIMARY KEY, isim TEXT)")
 
-if request.method == "POST":
-    isim = request.form.get("isim")
-if isim:
-        cur.execute("INSERT INTO ziyaretciler (isim) VALUES (%s)", (isim,))
-        conn.commit()
+    if request.method == "POST":
+        
+        isim = request.form.get("isim")
+    
+        if isim:
+            cur.execute("INSERT INTO ziyaretciler (isim) VALUES (%s)", (isim,))
+            conn.commit()
 
-cur.execute("SELECT isim FROM ziyaretciler ORDER BY id DESC LIMIT 10")
-isimler = [row[0] for row in cur.fetchall()]
+    cur.execute("SELECT isim FROM ziyaretciler ORDER BY id DESC LIMIT 10")
+    isimler = [row[0] for row in cur.fetchall()]
 
-cur.close()
-conn.close()
-return render_template_string(HTML, isimler=isimler)
+    cur.close()
+    conn.close()
+    return render_template_string(HTML, isimler=isimler)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port =5000)
